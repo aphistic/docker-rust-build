@@ -1,0 +1,14 @@
+FROM debian:stretch
+
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl https://sh.rustup.rs -sSf | sh -s -- -y && \
+    echo 'source $HOME/.cargo/env' >> $HOME/.bashrc && \
+    . $HOME/.cargo/env && \
+    rustup target add i686-pc-windows-gnu && \
+    rustup target add i686-pc-windows-msvc && \
+    rustup target add x86_64-pc-windows-gnu && \
+    rustup target add x86_64-pc-windows-msvc && \
+    apt-get remove -y --purge curl && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
